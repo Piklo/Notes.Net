@@ -3,6 +3,6 @@
 public sealed class Note
 {
     public required Guid Id { get; init; }
-    public required Guid OwnerId { get; init; }
-    public string Value { get; init; }
+    public required Guid UserId { get; init; }
+    public required string Value { get; init; }
 }
