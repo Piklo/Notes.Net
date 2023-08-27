@@ -1,3 +1,4 @@
+using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Login;
 using Notes_MinimalApi.Notes;
 using Notes_MinimalApi.Register;
@@ -9,6 +10,7 @@ internal sealed class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddSingleton<DatabaseAccess>();
 
         builder.Services.AddAuthentication(AuthSchema)
             .AddCookie(AuthSchema);
