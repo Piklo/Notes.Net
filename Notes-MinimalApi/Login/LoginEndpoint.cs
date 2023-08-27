@@ -23,7 +23,7 @@ internal static class LoginEndpoint
         if (result == PasswordVerificationResult.Failed)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            return new LoginResponse() { Status = LoginStatus.Failed };
+            return new LoginResponse() { Status = LoginStatus.WrongPassword };
         }
 
         var claims = new List<Claim>()

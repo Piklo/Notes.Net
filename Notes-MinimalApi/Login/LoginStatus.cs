@@ -4,5 +4,6 @@ internal enum LoginStatus
 {
     Failed,
     Success,
+    WrongPassword,
     UserNotFound,
 }
