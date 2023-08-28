@@ -2,5 +2,5 @@
 
 internal static class ClaimConstants
 {
-    public static string UserLogin => "userLogin";
+    public static string UserId => "userId";
 }

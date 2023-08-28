@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Dapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Notes_MinimalApi.Database;
 using System.Security.Claims;
 
 namespace Notes_MinimalApi.Login;
 
 internal static class LoginEndpoint
 {
-    public static async Task<LoginResponse> HandleLogin(HttpContext context, LoginUserDto userDto, HashedPasswordsProvider hashedPasswordsProvider)
+    public static async Task<LoginResponse> HandleLogin(HttpContext context, LoginUserDto userDto, HashedPasswordsProvider hashedPasswordsProvider, DatabaseAccess databaseAccess)
     {
         var hashedPassword = await hashedPasswordsProvider.GetHashedPasswordAsync(userDto.Login);
 
@@ -25,9 +27,19 @@ internal static class LoginEndpoint
             return new LoginResponse() { Status = LoginStatus.WrongPassword };
         }
 
+        using var connection = databaseAccess.Connect();
+
+        var id = await connection.QueryFirstOrDefaultAsync<string>("SELECT Id FROM Users WHERE Login = @Login", new { Login = userDto.Login });
+
+        if (id is null)
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return new LoginResponse() { Status = LoginStatus.UserNotFound };
+        }
+
         var claims = new List<Claim>()
         {
-            new Claim(ClaimConstants.UserLogin, userDto.Login)
+            new Claim(ClaimConstants.UserId, id)
         };
 
         var identity = new ClaimsIdentity(claims, Constants.AuthSchema);
