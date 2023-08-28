@@ -12,7 +12,6 @@ internal sealed class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddSingleton<DatabaseAccess>();
         builder.Services.AddScoped<HashedPasswordsProvider>();
-        builder.Services.AddScoped<RegisterAccountProvider>();
 
         builder.Services.AddAuthentication(AuthSchema)
             .AddCookie(AuthSchema);
