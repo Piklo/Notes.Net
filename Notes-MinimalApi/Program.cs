@@ -1,4 +1,5 @@
 using Notes_MinimalApi;
+using Notes_MinimalApi.AddNote;
 using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Login;
 using Notes_MinimalApi.Notes;
@@ -39,6 +40,8 @@ app.MapPost("/login", LoginEndpoint.HandleLogin)
 
 app.MapPost("/register", RegisterEndpoint.HandleRegister)
     .AllowAnonymous();
+
+app.MapAddNoteEndpoint();
 
 app.MapGet("/getNotes", GetNotesEndpoint.HandleGetNotes)
     .RequireAuthorization(Constants.LoggedInPolicyName);
