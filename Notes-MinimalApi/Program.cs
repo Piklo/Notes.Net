@@ -4,36 +4,31 @@ using Notes_MinimalApi.Login;
 using Notes_MinimalApi.Notes;
 using Notes_MinimalApi.Register;
 
-internal sealed class Program
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton<DatabaseAccess>();
+builder.Services.AddScoped<HashedPasswordsProvider>();
+
+builder.Services.AddAuthentication(Constants.AuthSchema)
+    .AddCookie(Constants.AuthSchema);
+
+builder.Services.AddAuthorization(options =>
 {
-    private static void Main(string[] args)
+    options.AddPolicy(Constants.LoggedInPolicyName, builder =>
     {
-        var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddSingleton<DatabaseAccess>();
-        builder.Services.AddScoped<HashedPasswordsProvider>();
+        builder.RequireAuthenticatedUser()
+        .AddAuthenticationSchemes(Constants.AuthSchema);
+    });
+});
 
-        builder.Services.AddAuthentication(Constants.AuthSchema)
-            .AddCookie(Constants.AuthSchema);
+var app = builder.Build();
+app.MapPost("/login", LoginEndpoint.HandleLogin)
+    .AllowAnonymous();
 
-        builder.Services.AddAuthorization(options =>
-        {
-            options.AddPolicy(Constants.LoggedInPolicyName, builder =>
-            {
-                builder.RequireAuthenticatedUser()
-                .AddAuthenticationSchemes(Constants.AuthSchema);
-            });
-        });
+app.MapPost("/register", RegisterEndpoint.HandleRegister)
+    .AllowAnonymous();
 
-        var app = builder.Build();
-        app.MapPost("/login", LoginEndpoint.HandleLogin)
-            .AllowAnonymous();
+app.MapGet("/getNotes", GetNotesEndpoint.HandleGetNotes)
+    .RequireAuthorization(Constants.LoggedInPolicyName);
 
-        app.MapPost("/register", RegisterEndpoint.HandleRegister)
-            .AllowAnonymous();
-
-        app.MapGet("/getNotes", GetNotesEndpoint.HandleGetNotes)
-            .RequireAuthorization(Constants.LoggedInPolicyName);
-
-        app.Run();
-    }
-}
+app.Run();
