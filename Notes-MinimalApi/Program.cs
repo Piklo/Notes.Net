@@ -10,7 +10,19 @@ builder.Services.AddSingleton<DatabaseAccess>();
 builder.Services.AddScoped<HashedPasswordsProvider>();
 
 builder.Services.AddAuthentication(Constants.AuthSchema)
-    .AddCookie(Constants.AuthSchema);
+    .AddCookie(Constants.AuthSchema, options =>
+    {
+        options.Events.OnRedirectToAccessDenied = c =>
+        {
+            c.Response.StatusCode = StatusCodes.Status403Forbidden;
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToLogin = c =>
+        {
+            c.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
+    });
 
 builder.Services.AddAuthorization(options =>
 {
