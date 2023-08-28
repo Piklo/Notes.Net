@@ -27,7 +27,7 @@ internal static class LoginEndpoint
 
         var claims = new List<Claim>()
         {
-            new Claim("userLogin", userDto.Login)
+            new Claim(ClaimConstants.UserLogin, userDto.Login)
         };
 
         var identity = new ClaimsIdentity(claims, Constants.AuthSchema);
