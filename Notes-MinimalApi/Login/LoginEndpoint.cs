@@ -30,7 +30,7 @@ internal static class LoginEndpoint
             new Claim("userLogin", userDto.Login)
         };
 
-        var identity = new ClaimsIdentity(claims, Program.AuthSchema);
+        var identity = new ClaimsIdentity(claims, Constants.AuthSchema);
         var user = new ClaimsPrincipal(identity);
         await context.SignInAsync(user);
 

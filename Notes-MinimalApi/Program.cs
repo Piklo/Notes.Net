@@ -1,3 +1,4 @@
+using Notes_MinimalApi;
 using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Login;
 using Notes_MinimalApi.Notes;
@@ -5,23 +6,21 @@ using Notes_MinimalApi.Register;
 
 internal sealed class Program
 {
-    internal const string AuthSchema = "cookie";
-    internal const string PolicyName = "logged in";
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddSingleton<DatabaseAccess>();
         builder.Services.AddScoped<HashedPasswordsProvider>();
 
-        builder.Services.AddAuthentication(AuthSchema)
-            .AddCookie(AuthSchema);
+        builder.Services.AddAuthentication(Constants.AuthSchema)
+            .AddCookie(Constants.AuthSchema);
 
         builder.Services.AddAuthorization(options =>
         {
-            options.AddPolicy(PolicyName, builder =>
+            options.AddPolicy(Constants.LoggedInPolicyName, builder =>
             {
                 builder.RequireAuthenticatedUser()
-                .AddAuthenticationSchemes(AuthSchema);
+                .AddAuthenticationSchemes(Constants.AuthSchema);
             });
         });
 
@@ -33,7 +32,7 @@ internal sealed class Program
             .AllowAnonymous();
 
         app.MapGet("/getNotes", GetNotesEndpoint.HandleGetNotes)
-            .RequireAuthorization(PolicyName);
+            .RequireAuthorization(Constants.LoggedInPolicyName);
 
         app.Run();
     }
