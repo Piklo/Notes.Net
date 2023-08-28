@@ -1,6 +1,7 @@
 CREATE TABLE Users(
     Id varchar(255) NOT NULL UNIQUE,
     Login varchar(255) NOT NULL UNIQUE,
+    Email varchar(255) NOT NULL UNIQUE,
     PasswordHash varchar(255) NOT NULL,
     PRIMARY KEY (Id)
 );
