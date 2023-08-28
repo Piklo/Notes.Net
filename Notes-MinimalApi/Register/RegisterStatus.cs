@@ -6,5 +6,4 @@ internal enum RegisterStatus
     Success,
     EmailInUse,
     LoginInUse,
-    InvalidPassword,
 }
