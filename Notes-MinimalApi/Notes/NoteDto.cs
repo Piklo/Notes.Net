@@ -1,4 +1,4 @@
-﻿namespace Notes_MinimalApi.Notes.GetNotes;
+﻿namespace Notes_MinimalApi.Notes;
 
 internal sealed class NoteDto
 {
