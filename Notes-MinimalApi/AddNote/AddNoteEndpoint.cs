@@ -17,6 +17,7 @@ public static class AddNoteEndpoint
 
         if (userId is null)
         {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return new AddNoteResponse() { Status = AddNoteStatus.Failed };
         }
 
@@ -24,6 +25,7 @@ public static class AddNoteEndpoint
 
         await connection.ExecuteAsync("INSERT INTO Notes (Id, UserId, Value) VALUES (@Id, @UserId, @Value)", new { Id = Guid.NewGuid(), UserId = userId, Value = note.Value });
 
+        context.Response.StatusCode = StatusCodes.Status201Created;
         return new AddNoteResponse() { Status = AddNoteStatus.Success };
     }
 }
