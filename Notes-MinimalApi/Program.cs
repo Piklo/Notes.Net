@@ -41,7 +41,7 @@ app.MapRegisterEndpoint();
 
 app.MapAddNoteEndpoint();
 
-app.MapGet("/getNotes", GetNotesEndpoint.HandleGetNotes)
+app.MapGet("/getNotes", GetNotesEndpoint.HandleAsync)
     .RequireAuthorization(Constants.LoggedInPolicyName);
 
 app.Run();
