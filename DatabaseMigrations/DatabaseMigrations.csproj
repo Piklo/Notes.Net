@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Migrations\Script0001 - Initial database.sql" />
+    <EmbeddedResource Include="Migrations\Script0002 - Make Ids case insensitive.sql" />
   </ItemGroup>
 
   <ItemGroup>

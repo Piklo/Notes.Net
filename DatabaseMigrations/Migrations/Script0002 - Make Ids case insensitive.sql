@@ -1,0 +1,29 @@
+﻿PRAGMA foreign_keys=OFF;
+
+BEGIN;
+
+CREATE TABLE UsersNew(
+    Id varchar(255) NOT NULL UNIQUE COLLATE NOCASE,
+    Login varchar(255) NOT NULL UNIQUE,
+    Email varchar(255) NOT NULL UNIQUE,
+    PasswordHash varchar(255) NOT NULL,
+    PRIMARY KEY (Id)
+);
+INSERT INTO UsersNew SELECT * FROM Users;
+DROP TABLE Users;
+ALTER TABLE UsersNew RENAME TO Users;
+
+CREATE TABLE NotesNew(
+    Id varchar(255) NOT NULL UNIQUE COLLATE NOCASE,
+    UserId varchar(255) NOT NULL COLLATE NOCASE,
+    Value text NOT NULL,
+    PRIMARY KEY (Id),
+    CONSTRAINT FK_User_Note FOREIGN KEY (UserId) REFERENCES Users (Id) ON DELETE CASCADE
+);
+INSERT INTO NotesNew SELECT * FROM Notes;
+DROP TABLE Notes;
+ALTER TABLE NotesNew RENAME TO Notes;
+
+COMMIT;
+
+PRAGMA foreign_keys=ON;
