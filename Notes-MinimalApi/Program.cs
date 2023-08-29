@@ -8,7 +8,6 @@ using Notes_MinimalApi.Register;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DatabaseAccess>();
-builder.Services.AddScoped<HashedPasswordsProvider>();
 
 builder.Services.AddAuthentication(Constants.AuthSchema)
     .AddCookie(Constants.AuthSchema, options =>

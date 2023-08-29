@@ -14,18 +14,21 @@ internal static class LoginEndpoint
             .AllowAnonymous();
     }
 
-    private static async Task<LoginResponse> HandleAsync(HttpContext context, LoginUserDto userDto, HashedPasswordsProvider hashedPasswordsProvider, DatabaseAccess databaseAccess)
+    private static async Task<LoginResponse> HandleAsync(HttpContext context, LoginUserDto userDto, DatabaseAccess databaseAccess)
     {
-        var hashedPassword = await hashedPasswordsProvider.GetHashedPasswordAsync(userDto.Login);
+        using var connection = databaseAccess.Connect();
 
-        if (hashedPassword is null)
+        var userData = await connection.QueryFirstOrDefaultAsync<LoginUserData>("SELECT Id, PasswordHash FROM Users WHERE Login = @Login", new { Login = userDto.Login });
+
+        if (userData is null)
         {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return new LoginResponse() { Status = LoginStatus.UserNotFound };
         }
 
         var hasher = new PasswordHasher<string>();
 
-        var result = hasher.VerifyHashedPassword(userDto.Login, hashedPassword, userDto.Password);
+        var result = hasher.VerifyHashedPassword(userDto.Login, userData.PasswordHash, userDto.Password);
 
         if (result == PasswordVerificationResult.Failed)
         {
@@ -33,19 +36,9 @@ internal static class LoginEndpoint
             return new LoginResponse() { Status = LoginStatus.WrongPassword };
         }
 
-        using var connection = databaseAccess.Connect();
-
-        var id = await connection.QueryFirstOrDefaultAsync<string>("SELECT Id FROM Users WHERE Login = @Login", new { Login = userDto.Login });
-
-        if (id is null)
-        {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            return new LoginResponse() { Status = LoginStatus.UserNotFound };
-        }
-
         var claims = new List<Claim>()
         {
-            new Claim(ClaimConstants.UserId, id)
+            new Claim(ClaimConstants.UserId, userData.Id)
         };
 
         var identity = new ClaimsIdentity(claims, Constants.AuthSchema);
