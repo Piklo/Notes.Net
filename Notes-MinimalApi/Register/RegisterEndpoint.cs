@@ -8,7 +8,13 @@ namespace Notes_MinimalApi.Register;
 
 internal static class RegisterEndpoint
 {
-    public static async Task<RegisterResponse> HandleRegister(HttpContext context, RegisterUserDto user, DatabaseAccess databaseAccess)
+    public static void MapRegisterEndpoint(this WebApplication app)
+    {
+        app.MapPost("/register", RegisterEndpoint.HandleAsync)
+            .AllowAnonymous();
+    }
+
+    private static async Task<RegisterResponse> HandleAsync(HttpContext context, RegisterUserDto user, DatabaseAccess databaseAccess)
     {
         var id = Guid.NewGuid();
         using var connection = databaseAccess.Connect();

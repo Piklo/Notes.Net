@@ -38,8 +38,7 @@ var app = builder.Build();
 app.MapPost("/login", LoginEndpoint.HandleLogin)
     .AllowAnonymous();
 
-app.MapPost("/register", RegisterEndpoint.HandleRegister)
-    .AllowAnonymous();
+app.MapRegisterEndpoint();
 
 app.MapAddNoteEndpoint();
 
