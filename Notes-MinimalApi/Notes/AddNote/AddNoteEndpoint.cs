@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Notes_MinimalApi.Database;
 
-namespace Notes_MinimalApi.AddNote;
+namespace Notes_MinimalApi.Notes.AddNote;
 
 public static class AddNoteEndpoint
 {
@@ -23,7 +23,7 @@ public static class AddNoteEndpoint
 
         using var connection = databaseAccess.Connect();
 
-        await connection.ExecuteAsync("INSERT INTO Notes (Id, UserId, Value) VALUES (@Id, @UserId, @Value)", new { Id = Guid.NewGuid(), UserId = userId, Value = note.Value });
+        await connection.ExecuteAsync("INSERT INTO Notes (Id, UserId, Value) VALUES (@Id, @UserId, @Value)", new { Id = Guid.NewGuid(), UserId = userId, note.Value });
 
         context.Response.StatusCode = StatusCodes.Status201Created;
         return new AddNoteResponse() { Status = AddNoteStatus.Success };

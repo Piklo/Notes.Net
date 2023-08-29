@@ -1,8 +1,8 @@
 using Notes_MinimalApi;
-using Notes_MinimalApi.AddNote;
 using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Login;
-using Notes_MinimalApi.Notes;
+using Notes_MinimalApi.Notes.AddNote;
+using Notes_MinimalApi.Notes.GetNotes;
 using Notes_MinimalApi.Register;
 
 

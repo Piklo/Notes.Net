@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Notes_MinimalApi.Database;
 
-namespace Notes_MinimalApi.Notes;
+namespace Notes_MinimalApi.Notes.GetNotes;
 
 internal static class GetNotesEndpoint
 {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Notes_MinimalApi.Notes;
+namespace Notes_MinimalApi.Notes.GetNotes;
 
 internal sealed class GetNotesResponse
 {

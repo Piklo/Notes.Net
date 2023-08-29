@@ -1,4 +1,4 @@
-﻿namespace Notes_MinimalApi.Notes;
+﻿namespace Notes_MinimalApi.Notes.GetNotes;
 
 public sealed class Note
 {
