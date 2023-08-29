@@ -20,7 +20,7 @@ internal static class GetNotesEndpoint
             return new GetNotesResponse() { Status = GetNotesStatus.Failed };
         }
 
-        var connection = databaseAccess.Connect();
+        using var connection = databaseAccess.Connect();
 
         var notes = (await connection.QueryAsync<NoteDto>("SELECT Id, Value FROM Notes WHERE UserId = @UserId", new { UserId = userId })).ToArray();
 
