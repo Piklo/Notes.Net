@@ -4,6 +4,8 @@ namespace Notes_MinimalApi.Register;
 
 internal sealed class RegisterResponse
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public required RegisterStatus Status { get; init; }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public RegisterStatus StatusText => Status;
 }
