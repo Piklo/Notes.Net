@@ -4,6 +4,7 @@ using Notes_MinimalApi.Login;
 using Notes_MinimalApi.Notes.AddNote;
 using Notes_MinimalApi.Notes.GetNote;
 using Notes_MinimalApi.Notes.GetNotes;
+using Notes_MinimalApi.Notes.UpdateNote;
 using Notes_MinimalApi.Register;
 
 
@@ -37,13 +38,10 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 app.MapLoginEndpoint();
-
 app.MapRegisterEndpoint();
-
 app.MapAddNoteEndpoint();
-
 app.MapGetNotesEndpoint();
-
 app.MapGetNoteEndpoint();
+app.MapUpdateNoteEndpoint();
 
 app.Run();
