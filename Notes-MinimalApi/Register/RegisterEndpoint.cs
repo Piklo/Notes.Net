@@ -28,6 +28,7 @@ internal static class RegisterEndpoint
         }
         catch (SqliteException ex)
         {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
             if (ex.SqliteExtendedErrorCode == SqliteErrorCodes.SQLITE_CONSTRAINT_UNIQUE)
             {
                 if (ex.Message.Contains("login", StringComparison.CurrentCultureIgnoreCase))
@@ -45,10 +46,12 @@ internal static class RegisterEndpoint
         }
         catch (Exception)
         {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
             return new RegisterResponse() { Status = RegisterStatus.Failed };
         }
 
 
+        context.Response.StatusCode = StatusCodes.Status201Created;
         return new RegisterResponse() { Status = RegisterStatus.Success };
     }
 }
