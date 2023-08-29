@@ -8,7 +8,13 @@ namespace Notes_MinimalApi.Login;
 
 internal static class LoginEndpoint
 {
-    public static async Task<LoginResponse> HandleLogin(HttpContext context, LoginUserDto userDto, HashedPasswordsProvider hashedPasswordsProvider, DatabaseAccess databaseAccess)
+    public static void MapLoginEndpoint(this WebApplication app)
+    {
+        app.MapPost("/login", LoginEndpoint.HandleAsync)
+            .AllowAnonymous();
+    }
+
+    private static async Task<LoginResponse> HandleAsync(HttpContext context, LoginUserDto userDto, HashedPasswordsProvider hashedPasswordsProvider, DatabaseAccess databaseAccess)
     {
         var hashedPassword = await hashedPasswordsProvider.GetHashedPasswordAsync(userDto.Login);
 
