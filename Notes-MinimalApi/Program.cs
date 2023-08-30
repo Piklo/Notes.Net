@@ -11,6 +11,15 @@ using Notes_MinimalApi.User.Register;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DatabaseAccess>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000")
+        .WithHeaders("content-type");
+    });
+});
+
 builder.Services.AddAuthentication(Constants.AuthSchema)
     .AddCookie(Constants.AuthSchema, options =>
     {
@@ -40,6 +49,9 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors();
+//app.UseHttpsRedirection();
 
 app.MapLoginEndpoint();
 app.MapRegisterEndpoint();
