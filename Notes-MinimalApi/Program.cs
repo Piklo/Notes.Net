@@ -1,12 +1,11 @@
 using Notes_MinimalApi;
 using Notes_MinimalApi.Database;
-using Notes_MinimalApi.Login;
 using Notes_MinimalApi.Notes.AddNote;
 using Notes_MinimalApi.Notes.GetNote;
 using Notes_MinimalApi.Notes.GetNotes;
 using Notes_MinimalApi.Notes.UpdateNote;
-using Notes_MinimalApi.Register;
-
+using Notes_MinimalApi.User.Login;
+using Notes_MinimalApi.User.Register;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DatabaseAccess>();

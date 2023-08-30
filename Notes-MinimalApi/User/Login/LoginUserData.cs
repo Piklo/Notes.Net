@@ -1,4 +1,4 @@
-﻿namespace Notes_MinimalApi.Login;
+﻿namespace Notes_MinimalApi.User.Login;
 
 internal sealed class LoginUserData
 {

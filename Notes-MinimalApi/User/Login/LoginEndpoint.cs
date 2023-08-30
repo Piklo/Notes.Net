@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Notes_MinimalApi.Database;
 using System.Security.Claims;
 
-namespace Notes_MinimalApi.Login;
+namespace Notes_MinimalApi.User.Login;
 
 internal static class LoginEndpoint
 {
@@ -18,7 +18,7 @@ internal static class LoginEndpoint
     {
         using var connection = databaseAccess.Connect();
 
-        var userData = await connection.QueryFirstOrDefaultAsync<LoginUserData>("SELECT Id, PasswordHash FROM Users WHERE Login = @Login", new { Login = userDto.Login });
+        var userData = await connection.QueryFirstOrDefaultAsync<LoginUserData>("SELECT Id, PasswordHash FROM Users WHERE Login = @Login", new { userDto.Login });
 
         if (userData is null)
         {

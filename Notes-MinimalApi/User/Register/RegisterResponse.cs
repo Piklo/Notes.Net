@@ -1,4 +1,4 @@
-﻿namespace Notes_MinimalApi.Register;
+﻿namespace Notes_MinimalApi.User.Register;
 
 internal sealed class RegisterResponse
 {

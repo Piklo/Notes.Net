@@ -4,7 +4,7 @@ using Microsoft.Data.Sqlite;
 using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Sqlite;
 
-namespace Notes_MinimalApi.Register;
+namespace Notes_MinimalApi.User.Register;
 
 internal static class RegisterEndpoint
 {
@@ -24,7 +24,7 @@ internal static class RegisterEndpoint
         try
         {
             await connection.ExecuteAsync("INSERT INTO users (Id, Login, Email, PasswordHash) VALUES (@Id, @Login, @Email, @PasswordHash);",
-                new { Id = id, Login = user.Login, Email = user.Email, PasswordHash = passwordHash });
+                new { Id = id, user.Login, user.Email, PasswordHash = passwordHash });
         }
         catch (SqliteException ex)
         {
