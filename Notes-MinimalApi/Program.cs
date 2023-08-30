@@ -31,11 +31,15 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(Constants.LoggedInPolicyName, builder =>
     {
         builder.RequireAuthenticatedUser()
-        .AddAuthenticationSchemes(Constants.AuthSchema);
+        .AddAuthenticationSchemes(Constants.AuthSchema)
+        .RequireClaim(ClaimConstants.UserId);
     });
 });
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapLoginEndpoint();
 app.MapRegisterEndpoint();

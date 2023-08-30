@@ -43,7 +43,7 @@ internal static class LoginEndpoint
 
         var identity = new ClaimsIdentity(claims, Constants.AuthSchema);
         var user = new ClaimsPrincipal(identity);
-        await context.SignInAsync(user);
+        await context.SignInAsync(Constants.AuthSchema, user);
 
         return new LoginResponse() { Status = LoginStatus.Success };
     }
