@@ -3,6 +3,7 @@ using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Notes.AddNote;
 using Notes_MinimalApi.Notes.GetNote;
 using Notes_MinimalApi.Notes.GetNotes;
+using Notes_MinimalApi.Notes.RemoveNote;
 using Notes_MinimalApi.Notes.UpdateNote;
 using Notes_MinimalApi.User.Login;
 using Notes_MinimalApi.User.Register;
@@ -42,5 +43,6 @@ app.MapAddNoteEndpoint();
 app.MapGetNotesEndpoint();
 app.MapGetNoteEndpoint();
 app.MapUpdateNoteEndpoint();
+app.MapRemoveNoteEndpoint();
 
 app.Run();
