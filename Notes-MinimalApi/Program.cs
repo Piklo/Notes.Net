@@ -16,6 +16,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(builder =>
     {
         builder.WithOrigins("http://localhost:3000")
+        .AllowCredentials()
         .WithHeaders("content-type");
     });
 });
@@ -33,6 +34,7 @@ builder.Services.AddAuthentication(Constants.AuthSchema)
             c.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return Task.CompletedTask;
         };
+        options.Cookie.SameSite = SameSiteMode.None;
     });
 
 builder.Services.AddAuthorization(options =>
