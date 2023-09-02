@@ -35,6 +35,7 @@ builder.Services.AddAuthentication(Constants.AuthSchema)
             return Task.CompletedTask;
         };
         options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.Name = "session";
     });
 
 builder.Services.AddAuthorization(options =>
