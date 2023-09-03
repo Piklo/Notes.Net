@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(Constants.AuthSchema)
             c.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return Task.CompletedTask;
         };
-        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SameSite = SameSiteMode.Lax;
         options.Cookie.Name = "session";
     });
 
