@@ -3,6 +3,7 @@ using Notes_MinimalApi.Database;
 using Notes_MinimalApi.Notes.AddNote;
 using Notes_MinimalApi.Notes.GetNote;
 using Notes_MinimalApi.Notes.GetNotes;
+using Notes_MinimalApi.Notes.Logout;
 using Notes_MinimalApi.Notes.RemoveNote;
 using Notes_MinimalApi.Notes.UpdateNote;
 using Notes_MinimalApi.User.Login;
@@ -57,6 +58,7 @@ app.UseCors();
 //app.UseHttpsRedirection();
 
 app.MapLoginEndpoint();
+app.MapLogoutEndpoint();
 app.MapRegisterEndpoint();
 app.MapAddNoteEndpoint();
 app.MapGetNotesEndpoint();
