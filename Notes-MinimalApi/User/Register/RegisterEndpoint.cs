@@ -16,6 +16,11 @@ internal static class RegisterEndpoint
 
     private static async Task<RegisterResponse> HandleAsync(HttpContext context, RegisterUserDto user, DatabaseAccess databaseAccess)
     {
+        if (string.IsNullOrWhiteSpace(user.Login) || string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.Password))
+        {
+            return new RegisterResponse { Status = RegisterStatus.Failed };
+        }
+
         var id = Guid.NewGuid();
         using var connection = databaseAccess.Connect();
         var hasher = new PasswordHasher<string>();
