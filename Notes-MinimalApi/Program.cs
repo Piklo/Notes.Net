@@ -12,16 +12,6 @@ using Notes_MinimalApi.User.Register;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DatabaseAccess>();
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.WithOrigins("http://localhost:3000")
-        .AllowCredentials()
-        .WithHeaders("content-type");
-    });
-});
-
 builder.Services.AddAuthentication(Constants.AuthSchema)
     .AddCookie(Constants.AuthSchema, options =>
     {
@@ -35,7 +25,6 @@ builder.Services.AddAuthentication(Constants.AuthSchema)
             c.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return Task.CompletedTask;
         };
-        options.Cookie.SameSite = SameSiteMode.Lax;
         options.Cookie.Name = "session";
     });
 
@@ -53,9 +42,6 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseCors();
-//app.UseHttpsRedirection();
 
 app.MapLoginEndpoint();
 app.MapLogoutEndpoint();
