@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UserSecretsId>b0dd2bd2-2dd0-41cb-ad6b-921825db616c</UserSecretsId>
@@ -14,9 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dbup-core" Version="5.0.10" />
-    <PackageReference Include="dbup-sqlite" Version="5.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Include="dbup-core" Version="5.0.87" />
+    <PackageReference Include="dbup-sqlite" Version="5.0.40" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.7" />
   </ItemGroup>
 
 </Project>
